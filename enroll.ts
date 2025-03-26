@@ -14,26 +14,30 @@ const provider = new AnchorProvider(connection, new Wallet(keypair), {
 });
 
 // Create our program
-const program: Program<Turbin3Prereq> = new Program(IDL, provider);;
+const program: Program<Turbin3Prereq> = new Program(IDL, provider);
 
 // Create the PDA for our enrollment account
-const enrollmentSeeds = [Buffer.from("pre"), keypair.publicKey.toBuffer()];
-const [enrollment_key, _bump] = PublicKey.findProgramAddressSync(enrollmentSeeds, program.programId);
+const enrollmentSeeds = [Buffer.from("prereq"), keypair.publicKey.toBuffer()];
+const [enrollment_key, _bump] = PublicKey.findProgramAddressSync(
+  enrollmentSeeds,
+  program.programId
+);
 
 //Execute our enrollment transaction
 
-(async() => {
-    try {
-        const txhash = await program.methods
-        .submit(github)
-        .accounts({
-            signer: keypair.publicKey,
-        })
-        .signers([keypair]).rpc();
+(async () => {
+  try {
+    const txhash = await program.methods
+      .submit(github)
+      .accounts({
+        signer: keypair.publicKey,
+      })
+      .signers([keypair])
+      .rpc();
 
-        console.log(`Success! Check out your TX here:
+    console.log(`Success! Check out your TX here:
             https://explorer.solana.com/tx/${txhash}?cluster=devnet`);
-    } catch (err) {
-        console.error(`Oops, something went wrong: ${err}`)
-    }
-})()
+  } catch (err) {
+    console.error(`Oops, something went wrong: ${err}`);
+  }
+})();
