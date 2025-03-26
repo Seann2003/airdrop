@@ -8,6 +8,7 @@
     "convert": "ts-node ./convert.ts",
     "airdrop": "ts-node ./airdrop.ts",
     "transfer": "ts-node ./transfer.ts",
+    "empty": "ts-node ./emptyWallet.ts",
     "enroll": "ts-node ./enroll.ts"
   },
   "dependencies": {
